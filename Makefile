@@ -1,5 +1,5 @@
 OUT := audit
-VERSION ?= $(shell git describe --tags)
+VERSION ?= $(shell git describe --tags || echo 0.1)
 PKG=github.com/threecommaio/audit
 BUILDTIME:=$(shell date +"%Y.%m.%d.%H%M%S")
 COMMIT_HASH:=$(shell git log --pretty=format:'%h' -n 1)
@@ -15,6 +15,9 @@ build:
 
 install: build
 	@go install
+
+docker:
+	@docker build -t threecomma/audit:${VERSION} .
 
 clean:
 	-@rm ${OUT} ${OUT}-v*
