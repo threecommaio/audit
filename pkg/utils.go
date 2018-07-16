@@ -4,7 +4,7 @@ import (
 	"io/ioutil"
 	"os"
 	"os/exec"
-	"path"
+	"path/filepath"
 	"strings"
 )
 
@@ -51,7 +51,7 @@ func readFile(filename string) string {
 // readFileWithPaths reads a file by name and list of paths to search
 func readFileWithPaths(filename string, paths []string) string {
 	for _, p := range paths {
-		var pathFilename = path.Join(p, filename)
+		var pathFilename = filepath.Join(p, filename)
 		if _, err := os.Stat(pathFilename); err == nil {
 			return readFile(pathFilename)
 		}
