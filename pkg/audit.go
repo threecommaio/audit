@@ -14,6 +14,17 @@ const notAvailable = "not available"
 
 // Create a human readable json file of data
 func Create(stdOut bool) {
+	cassandraPaths := []string{
+		"/etc/cassandra",
+		"/etc/cassandra/conf",
+		"/etc/dse/cassandra",
+		"/etc/dse",
+		"/usr/local/share/cassandra",
+		"/usr/local/share/cassandra/conf",
+		"/opt/cassandra",
+		"/opt/cassandra/conf",
+	}
+
 	jsonData := Audit{
 		Internal: map[string]string{
 			"version":    Version,
@@ -56,6 +67,15 @@ func Create(stdOut bool) {
 		},
 		PowerMgmt: PowerMgmt{
 			MaxCState: readFile("/sys/module/intel_idle/parameters/max_cstate"),
+		},
+		Cassandra: Cassandra{
+			ConfigYaml:     readFileWithPaths("cassandra.yaml", cassandraPaths),
+			Env:            readFileWithPaths("cassandra-env.sh", cassandraPaths),
+			JvmOptions:     readFileWithPaths("jvm.options", cassandraPaths),
+			RackProperties: readFileWithPaths("cassandra-rackdc.properties", cassandraPaths),
+			DseYaml:        readFileWithPaths("dse.yaml", cassandraPaths),
+			NodeStatus:     readCommand("nodetool", "status"),
+			NodeInfo:       readCommand("nodetool", "info"),
 		},
 	}
 	b, _ := json.MarshalIndent(jsonData, "", "  ")

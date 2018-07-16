@@ -12,6 +12,7 @@ type Audit struct {
 	Network   Network           `json:"network"`
 	Distro    Distro            `json:"distro"`
 	PowerMgmt PowerMgmt         `json:"power_mgmt"`
+	Cassandra Cassandra         `json:"cassandra"`
 }
 
 // Proc holds the key settings of proc interface
@@ -58,4 +59,15 @@ type Distro struct {
 // PowerMgmt handles the power management settings
 type PowerMgmt struct {
 	MaxCState string `json:"max_cstate"`
+}
+
+// Cassandra
+type Cassandra struct {
+	ConfigYaml     string `json:"cassandra_yaml"`
+	Env            string `json:"cassandra_env"`
+	JvmOptions     string `json:"jvm_options"`
+	RackProperties string `json:"rack_properties"`
+	DseYaml        string `json:"dse_yaml"`
+	NodeStatus     string `json:"node_status"`
+	NodeInfo       string `json:"node_info"`
 }

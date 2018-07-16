@@ -4,6 +4,7 @@ import (
 	"io/ioutil"
 	"os"
 	"os/exec"
+	"path"
 	"strings"
 )
 
@@ -45,6 +46,17 @@ func readFile(filename string) string {
 		return notAvailable
 	}
 	return strings.TrimSpace(string(dat))
+}
+
+// readFileWithPaths reads a file by name and list of paths to search
+func readFileWithPaths(filename string, paths []string) string {
+	for _, p := range paths {
+		var pathFilename = path.Join(p, filename)
+		if _, err := os.Stat(pathFilename); err == nil {
+			return readFile(pathFilename)
+		}
+	}
+	return notAvailable
 }
 
 // delimitedData splits data by a delimiter
