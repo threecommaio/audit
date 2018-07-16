@@ -29,8 +29,8 @@ func getSysctl() map[string]string {
 	return kv
 }
 
-// read_command captures the output of a command
-func read_command(name string, arg ...string) string {
+// readCommand captures the output of a command
+func readCommand(name string, arg ...string) string {
 	out, err := exec.Command(name, arg...).Output()
 	if err != nil {
 		return notAvailable
@@ -38,8 +38,8 @@ func read_command(name string, arg ...string) string {
 	return strings.TrimSpace(string(out))
 }
 
-// read_file captures the contents of a file
-func read_file(filename string) string {
+// readFile captures the contents of a file
+func readFile(filename string) string {
 	dat, err := ioutil.ReadFile(filename)
 	if err != nil {
 		return notAvailable
@@ -47,8 +47,8 @@ func read_file(filename string) string {
 	return strings.TrimSpace(string(dat))
 }
 
-// delimited_data splits data by a delimiter
-func delimited_data(delimiter string, data string) map[string]string {
+// delimitedData splits data by a delimiter
+func delimitedData(delimiter string, data string) map[string]string {
 	kv := make(map[string]string)
 
 	if strings.Contains(data, notAvailable) {
@@ -67,8 +67,8 @@ func delimited_data(delimiter string, data string) map[string]string {
 	return kv
 }
 
-// get_release checks with linux distro it is
-func get_release() string {
+// getRelease checks with linux distro it is
+func getRelease() string {
 	rels := []string{
 		"/etc/SuSE-release", "/etc/redhat-release", "/etc/redhat_version",
 		"/etc/fedora-release", "/etc/slackware-release",
@@ -79,14 +79,14 @@ func get_release() string {
 	}
 	for _, path := range rels {
 		if _, err := os.Stat(path); err == nil {
-			return read_file(path)
+			return readFile(path)
 		}
 	}
 	return notAvailable
 }
 
-// get_scheduler handles capturing scheduler data for each block device
-func get_scheduler() map[string]string {
+// getScheduler handles capturing scheduler data for each block device
+func getScheduler() map[string]string {
 	kv := make(map[string]string)
 	files, err := ioutil.ReadDir("/sys/block")
 	if err != nil {
@@ -96,7 +96,7 @@ func get_scheduler() map[string]string {
 		block := f.Name()
 		path := "/sys/block/" + block + "/queue/scheduler"
 		if _, err := os.Stat(path); err == nil {
-			kv[block] = read_file(path)
+			kv[block] = readFile(path)
 		}
 	}
 	return kv
