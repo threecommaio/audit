@@ -63,11 +63,12 @@ type PowerMgmt struct {
 
 // Cassandra
 type Cassandra struct {
-	ConfigYaml     string `json:"cassandra_yaml"`
-	Env            string `json:"cassandra_env"`
-	JvmOptions     string `json:"jvm_options"`
-	RackProperties string `json:"rack_properties"`
-	DseYaml        string `json:"dse_yaml"`
-	NodeStatus     string `json:"node_status"`
-	NodeInfo       string `json:"node_info"`
+	ConfigYaml      string `json:"cassandra_yaml"`
+	Env             string `json:"cassandra_env"`
+	JvmOptions      string `json:"jvm_options"`
+	RackProperties  string `json:"rack_properties"`
+	DseYaml         string `json:"dse_yaml"`
+	NodetoolVersion string `json:"nodetool_version"`
+	NodetoolStatus  string `json:"nodetool_status"`
+	NodetoolInfo    string `json:"nodetool_info"`
 }
