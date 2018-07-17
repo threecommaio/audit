@@ -69,13 +69,14 @@ func Create(stdOut bool) {
 			MaxCState: readFile("/sys/module/intel_idle/parameters/max_cstate"),
 		},
 		Cassandra: Cassandra{
-			ConfigYaml:     readFileWithPaths("cassandra.yaml", cassandraPaths),
-			Env:            readFileWithPaths("cassandra-env.sh", cassandraPaths),
-			JvmOptions:     readFileWithPaths("jvm.options", cassandraPaths),
-			RackProperties: readFileWithPaths("cassandra-rackdc.properties", cassandraPaths),
-			DseYaml:        readFileWithPaths("dse.yaml", cassandraPaths),
-			NodeStatus:     readCommand("nodetool", "status"),
-			NodeInfo:       readCommand("nodetool", "info"),
+			ConfigYaml:      readFileWithPaths("cassandra.yaml", cassandraPaths),
+			Env:             readFileWithPaths("cassandra-env.sh", cassandraPaths),
+			JvmOptions:      readFileWithPaths("jvm.options", cassandraPaths),
+			RackProperties:  readFileWithPaths("cassandra-rackdc.properties", cassandraPaths),
+			DseYaml:         readFileWithPaths("dse.yaml", cassandraPaths),
+			NodetoolVersion: readCommand("nodetool", "version"),
+			NodetoolStatus:  readCommand("nodetool", "status"),
+			NodetoolInfo:    readCommand("nodetool", "info"),
 		},
 	}
 	b, _ := json.MarshalIndent(jsonData, "", "  ")
