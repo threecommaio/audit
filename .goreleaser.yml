@@ -1,0 +1,18 @@
+builds:
+  - binary: audit
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - darwin
+      - linux
+    goarch:
+      - amd64
+      - 386
+
+archive:
+  format: binary
+
+release:
+  github:
+    owner: threecommaio
+    name: audit
