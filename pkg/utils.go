@@ -15,15 +15,16 @@ func getSysctl() map[string]string {
 	if err == nil {
 		lines := strings.Split(string(out), "\n")
 		for _, pair := range lines {
-
 			if strings.ContainsAny(pair, ":") {
 				z := strings.Split(pair, ":")
-				kv[z[0]] = strings.TrimSpace(z[1])
+				key := strings.TrimSpace(z[0])
+				kv[key] = strings.TrimSpace(z[1])
 			}
 
 			if strings.ContainsAny(pair, "=") {
 				z := strings.Split(pair, "=")
-				kv[z[0]] = strings.TrimSpace(z[1])
+				key := strings.TrimSpace(z[0])
+				kv[key] = strings.TrimSpace(z[1])
 			}
 		}
 	}
