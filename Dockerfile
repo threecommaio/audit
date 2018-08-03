@@ -1,12 +1,10 @@
-FROM golang:alpine as builder
-RUN apk add --no-cache git mercurial
-RUN go get -u github.com/golang/dep/...
-
+FROM golang:1.11beta2 as builder
 ENV WORKDIR /go/src/github.com/threecommaio/audit
 
 WORKDIR ${WORKDIR}
-COPY Gopkg.toml Gopkg.lock ./
-RUN dep ensure --vendor-only
+COPY go.mod go.sum ${WORKDIR}/
+ENV GO111MODULE on
+RUN go get
 
 COPY . ${WORKDIR}
 
