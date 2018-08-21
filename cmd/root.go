@@ -51,7 +51,7 @@ func Execute(version string) {
 func init() {
 	cobra.OnInitialize(initConfig)
 	rootCmd.Flags().BoolP("console", "c", false, "print to console instead of file")
-	rootCmd.Flags().StringP("upload", "u", "", "Accepts a Client-Token to upload to google cloud storage")
+	rootCmd.Flags().StringP("upload", "u", "", "the client token to use for upload")
 }
 
 // initConfig reads in config file and ENV variables if set.

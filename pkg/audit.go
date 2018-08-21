@@ -89,10 +89,8 @@ func Create(stdOut bool, clientToken string) {
 	timestamp := strconv.FormatInt(time.Now().Unix(), 10)
 
 	if stdOut {
-		// Output result to console
 		fmt.Println(string(b))
 	} else if clientToken != "" {
-		// Upload to google cloud
 		req, err := http.NewRequest("POST", auditURL, bytes.NewBuffer(b))
 		req.Header.Set("X-Client-Token", clientToken)
 		req.Header.Set("Content-Type", "application/json")
