@@ -1,19 +1,24 @@
 package audit
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"log"
+	"net/http"
 	"os"
 	"strconv"
 	"time"
 )
 
 const notAvailable = "not available"
+const xClientToken = "X-Client-Token"
+const auditURL = "https://audit.threecomma.io"
 
 // Create a human readable json file of data
-func Create(stdOut bool) {
+func Create(stdOut bool, clientToken string) {
 	cassandraPaths := []string{
 		"/etc/cassandra",
 		"/etc/cassandra/conf",
@@ -85,6 +90,23 @@ func Create(stdOut bool) {
 
 	if stdOut {
 		fmt.Println(string(b))
+	} else if clientToken != "" {
+		req, err := http.NewRequest("POST", auditURL, bytes.NewBuffer(b))
+		req.Header.Set("X-Client-Token", clientToken)
+		req.Header.Set("Content-Type", "application/json")
+
+		client := &http.Client{}
+		resp, err := client.Do(req)
+		if err != nil {
+			log.Fatal(err)
+		}
+		defer resp.Body.Close()
+
+		if resp.StatusCode == 200 {
+			io.Copy(ioutil.Discard, resp.Body)
+		} else {
+			log.Fatal(resp)
+		}
 	} else {
 		auditFile := fmt.Sprintf("audit-%s-%s.json", hostname, timestamp)
 		err := ioutil.WriteFile(auditFile, b, 0644)

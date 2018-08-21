@@ -28,12 +28,13 @@ It's designed to produce a human readable audit file for further analysis.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		uid := os.Getuid()
 		console, _ := cmd.Flags().GetBool("console")
+		upload, _ := cmd.Flags().GetString("upload")
 
 		if uid != 0 {
 			log.Fatal("this script must be run as the user [root]")
 		}
 
-		audit.Create(console)
+		audit.Create(console, upload)
 	},
 }
 
@@ -50,6 +51,7 @@ func Execute(version string) {
 func init() {
 	cobra.OnInitialize(initConfig)
 	rootCmd.Flags().BoolP("console", "c", false, "print to console instead of file")
+	rootCmd.Flags().StringP("upload", "u", "", "the client token to use for upload")
 }
 
 // initConfig reads in config file and ENV variables if set.
