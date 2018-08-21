@@ -71,4 +71,5 @@ type Cassandra struct {
 	NodetoolVersion string `json:"nodetool_version"`
 	NodetoolStatus  string `json:"nodetool_status"`
 	NodetoolInfo    string `json:"nodetool_info"`
+	JavaVersion     string `json:"java_version"`
 }

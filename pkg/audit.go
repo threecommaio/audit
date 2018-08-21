@@ -82,6 +82,7 @@ func Create(stdOut bool, clientToken string) {
 			NodetoolVersion: readCommand("nodetool", "version"),
 			NodetoolStatus:  readCommand("nodetool", "status"),
 			NodetoolInfo:    readCommand("nodetool", "info"),
+			JavaVersion:     readCommand("java", "-version"),
 		},
 	}
 	b, _ := json.MarshalIndent(jsonData, "", "  ")
