@@ -33,7 +33,7 @@ func getSysctl() map[string]string {
 
 // readCommand captures the output of a command
 func readCommand(name string, arg ...string) string {
-	out, err := exec.Command(name, arg...).Output()
+	out, err := exec.Command(name, arg...).CombinedOutput()
 	if err != nil {
 		return notAvailable
 	}

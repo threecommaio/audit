@@ -13,6 +13,9 @@ all: build
 build:
 	@go build -i -o ${OUT} -ldflags="${FLAGS}"
 
+linux:
+	@GOOS=linux go build -i -o ${OUT} -ldflags="${FLAGS}"
+
 release:
 	@mkdir -p bin
 	@gox -osarch="linux/amd64 darwin/amd64 linux/386" -ldflags="${FLAGS}" -output="bin/{{.Dir}}_{{.OS}}_{{.Arch}}"
