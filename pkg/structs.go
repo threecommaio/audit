@@ -27,6 +27,7 @@ type Proc struct {
 	Zoneinfo       string            `json:"zoneinfo"`
 	Partitions     string            `json:"partitions"`
 	Version        string            `json:"version"`
+	Meminfo        string            `json:"meminfo"`
 }
 
 // THP handles the transparent huge pages

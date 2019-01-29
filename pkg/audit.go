@@ -48,6 +48,7 @@ func Create(stdOut bool, clientToken string) {
 			Zoneinfo:       readFile("/proc/zoneinfo"),
 			Partitions:     readFile("/proc/partitions"),
 			Version:        readFile("/proc/version"),
+			Meminfo:        readFile("/proc/meminfo"),
 		},
 		Dmesg: readCommand("dmesg"),
 		THP: THP{
