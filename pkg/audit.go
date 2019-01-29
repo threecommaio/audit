@@ -49,6 +49,7 @@ func Create(stdOut bool, clientToken string) {
 			Partitions:     readFile("/proc/partitions"),
 			Version:        readFile("/proc/version"),
 			Meminfo:        readFile("/proc/meminfo"),
+			Swap:           readCommand("swapon", "-s"),
 		},
 		Dmesg: readCommand("dmesg"),
 		THP: THP{
